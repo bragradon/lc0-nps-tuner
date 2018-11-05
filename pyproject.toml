@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "lc0-nps-tuner"
+version = "0.1.0"
+description = ""
+authors = ["Brandon Navra <brandon.navra@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "3.7"
+tqdm = "^4.28"
+pexpect = "^4.6"
+natsort = "^5.4"
+Halo = "^0.0.18"
+pyinstaller = "^3.4"
+openpyxl = "^2.5"
+
+[tool.poetry.dev-dependencies]
+isort = "^4.3"
+flake8 = "^3.6"
+black = {version = "=18.9b0",python = "3.7"}
+ipython = "^7.0"
+pprintpp = "^0.4.0"
+nuitka = "^0.6.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

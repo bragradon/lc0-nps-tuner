@@ -1,0 +1,50 @@
+{
+  "seconds_per_move": 5,
+  "options": {
+    "backend-opts": ["(backend=cudnn,gpu=0),(backend=cudnn,gpu=1)"],
+    "backend": ["multiplexing"],
+    "allowed-node-collisions": [
+      32,
+      64,
+      128,
+      256
+    ],
+    "cpuct": [
+      2.8,
+      3.0,
+      3.2,
+      3.4,
+      3.6,
+      3.8,
+      4.0,
+      4.2
+    ],
+    "minibatch-size": [
+      64,
+      128,
+      256,
+      512,
+      640,
+      768,
+      896,
+      1024
+    ],
+    "nncache": [
+      2000000,
+      4000000,
+      6000000,
+      8000000,
+      10000000
+    ],
+    "threads": [
+      2,
+      4,
+      8,
+      12,
+      16
+    ],
+    "multipv": [
+      1
+    ]
+  }
+}
