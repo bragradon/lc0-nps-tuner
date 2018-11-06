@@ -105,4 +105,10 @@ venv.bak/
 
 ### JetBrains
 .idea/
-
+*.exe
+*.dll
+tuner/options.json
+tuner/weights*
+*.xlsx
+*.csv
+lc0

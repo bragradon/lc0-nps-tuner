@@ -1,3 +1,4 @@
+import os
 import platform
 import shutil
 import signal
@@ -18,7 +19,10 @@ from tuner.helpers import (
     add_results_to_sheet,
 )
 
-APP_DIR = Path().cwd()
+if getattr( sys, 'frozen', False ) :
+    APP_DIR = Path().cwd()
+else:
+    APP_DIR = Path(os.path.dirname(os.path.abspath(__file__)))
 
 if platform.system() == "Windows":
     LC0_PATH = Path(APP_DIR) / "lc0.exe"

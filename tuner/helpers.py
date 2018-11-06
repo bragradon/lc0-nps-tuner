@@ -160,6 +160,11 @@ def run_lc0_command(lco: Path, config_file: Path, seconds_per_move):
         child.expect(pexpect.EOF)
     except pexpect.exceptions.TIMEOUT:
         pass
+    except Exception as e:
+        print()
+        print(child.proc.args)
+        print(output.getvalue())
+        raise
 
     for line in output.getvalue().splitlines()[::-1]:
         match = LINE_REGEX.match(line)
