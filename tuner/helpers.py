@@ -154,7 +154,7 @@ def run_lc0_command(lco: Path, config_file: Path, seconds_per_move):
     output = StringIO()
     child.logfile = output
     try:
-        child.sendline(f"go infinite movetime {seconds_per_move * 1000}")
+        child.sendline(f"go movetime {seconds_per_move * 1000}")
         child.expect("bestmove")
         child.sendline("quit")
         child.expect(pexpect.EOF)

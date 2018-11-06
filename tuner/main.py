@@ -7,30 +7,18 @@ from pathlib import Path
 from halo import Halo
 from natsort import natsorted, ns
 
-try:
-    from .helpers import (
-        create_config_files,
-        run_lc0_command,
-        check_restarting,
-        get_time_config,
-        remove_old_results,
-        get_results_excel,
-        add_results_workbook_headers,
-        add_results_to_sheet,
-    )
-    APP_DIR = Path().cwd() / "tuner"
-except ImportError:
-    from tuner.helpers import (
-        create_config_files,
-        run_lc0_command,
-        check_restarting,
-        get_time_config,
-        remove_old_results,
-        get_results_excel,
-        add_results_workbook_headers,
-        add_results_to_sheet,
-    )
-    APP_DIR = Path().cwd()
+from tuner.helpers import (
+    create_config_files,
+    run_lc0_command,
+    check_restarting,
+    get_time_config,
+    remove_old_results,
+    get_results_excel,
+    add_results_workbook_headers,
+    add_results_to_sheet,
+)
+
+APP_DIR = Path().cwd()
 
 if platform.system() == "Windows":
     LC0_PATH = Path(APP_DIR) / "lc0.exe"
