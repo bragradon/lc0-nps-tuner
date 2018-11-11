@@ -1,5 +1,5 @@
 # lc0-nps-tuner
-A parameter CLOP runner for the LeelaZero chess engine
+A parameter tuner for the LeelaZero chess engine
 
 ## Story behind this program
 My father has always been an avid computer chess fan. 

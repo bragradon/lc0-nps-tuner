@@ -1,73 +1,54 @@
-import os
-import platform
-import shutil
 import signal
 import sys
-from pathlib import Path
 
 from halo import Halo
 from natsort import natsorted, ns
 
+from tuner.environment import Environment
 from tuner.helpers import (
-    create_config_files,
-    run_lc0_command,
     check_restarting,
+    create_config_files,
     get_time_config,
     remove_old_results,
-    get_results_excel,
-    add_results_workbook_headers,
-    add_results_to_sheet,
+    run_lc0_command,
 )
-
-if getattr( sys, 'frozen', False ) :
-    APP_DIR = Path().cwd()
-else:
-    APP_DIR = Path(os.path.dirname(os.path.abspath(__file__)))
-
-if platform.system() == "Windows":
-    LC0_PATH = Path(APP_DIR) / "lc0.exe"
-else:
-    LC0_PATH = Path(APP_DIR) / "lc0"
-
-if not LC0_PATH.exists():
-    print("Can't find lc0")
-    sys.exit(1)
-
-OPTIONS_FILE = Path(APP_DIR) / "options.json"
-CONFIG_DIR = Path(APP_DIR) / "configs"
-RESULTS_FILE = Path(APP_DIR) / "results.xlsx"
-
-
-def signal_handler(signal, frame):
-    sys.exit(1)
+from tuner.results import get_results_recorder
 
 
 def main():
-    signal.signal(signal.SIGINT, signal_handler)
-    restart_point = check_restarting(CONFIG_DIR)
-    if not restart_point:
-        create_config_files(CONFIG_DIR, OPTIONS_FILE)
-        remove_old_results(RESULTS_FILE)
+    env = Environment()
+    signal.signal(signal.SIGINT, ctrlc_signal_handler)
+    check_restarting_state(env)
 
-    seconds_per_move = get_time_config(OPTIONS_FILE)
-    wb, ws = get_results_excel(RESULTS_FILE)
-    add_results_workbook_headers(ws)
-    wb.save(filename=RESULTS_FILE.name)
+    seconds_per_move = get_time_config(env.options)
+    recorder = get_results_recorder(env)
 
     print("Press ctrl+c to stop at any time")
 
     spinner = Halo(text="Running Lc0", spinner="dots")
-    for config_file in natsorted(CONFIG_DIR.glob("*.config"), alg=ns.PATH):
-        relative_path = str(config_file.relative_to(LC0_PATH.parent))
+    for config_file in natsorted(env.configs_path.glob("*.config"), alg=ns.PATH):
+        relative_path = str(config_file.relative_to(env.lc0_path.parent))
         spinner.start(f"Running Lc0 - {relative_path}")
-        results = run_lc0_command(LC0_PATH, CONFIG_DIR / config_file, seconds_per_move)
+        results = run_lc0_command(
+            env.lc0_path, env.configs_path / config_file, seconds_per_move
+        )
 
-        add_results_to_sheet(ws, results, str(config_file.name))
-        wb.save(filename=RESULTS_FILE.name)
-
-        shutil.move(str(config_file.absolute()), config_file.parent / "processed")
+        recorder.record_result(results, config_file)
         spinner.stop()
+    else:
+        print("Tuning completed")
 
 
-if __name__ == '__main__':
+def ctrlc_signal_handler(signal, frame):
+    sys.exit(1)
+
+
+def check_restarting_state(environment: Environment):
+    restart_point = check_restarting(environment.configs_path)
+    if not restart_point:
+        create_config_files(environment.configs_path, environment.options_path)
+        remove_old_results(environment.results_path)
+
+
+if __name__ == "__main__":
     main()
