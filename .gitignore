@@ -107,8 +107,10 @@ venv.bak/
 .idea/
 *.exe
 *.dll
+tuner/configs
 tuner/options.json
 tuner/weights*
 *.xlsx
 *.csv
-lc0
+lc0*
+.vendored
