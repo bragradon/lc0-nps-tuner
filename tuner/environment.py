@@ -11,7 +11,7 @@ from tuner.options_template import OPTIONS_JSON_TEMPLATE
 
 
 class Environment:
-    def __init__(self):
+    def __init__(self, results_file_format):
         if not self.options_path.exists():
             with open(self.options_path.absolute()) as f:
                 f.write(OPTIONS_JSON_TEMPLATE)
@@ -19,7 +19,9 @@ class Environment:
                 sys.exit(1)
 
         # Check Required options
-        _ = [self.seconds_per_move, self.results_file_format]
+        _ = [self.seconds_per_move]
+
+        self.results_file_format = results_file_format
 
     @property
     def app_path(self) -> Path:
@@ -91,19 +93,3 @@ class Environment:
         except KeyError:
             print("options.json is missing the 'seconds_per_move' parameter")
             sys.exit(1)
-
-    @property
-    def results_file_format(self):
-        try:
-            results_filetype = self.options.get("results_file_format")
-        except KeyError:
-            print(
-                'options.json is missing the "results_file_format" parameter'
-                " - it must be one of: xlsx, csv"
-            )
-            sys.exit(1)
-
-        if results_filetype not in ("xlsx", "csv"):
-            print("options.json is not set correctly - it must be one of: xlsx, csv")
-
-        return results_filetype

@@ -1,6 +1,7 @@
 import signal
 import sys
 
+import click
 from halo import Halo
 from natsort import natsorted, ns
 
@@ -15,6 +16,14 @@ from tuner.helpers import (
 from tuner.results import get_results_recorder
 
 
+@click.command()
+@click.option(
+    "--results",
+    type=click.Choice(["xlsx", "csv"]),
+    default="xlsx",
+    show_default=True,
+    help="Results file format",
+)
 def main():
     env = Environment()
     signal.signal(signal.SIGINT, ctrlc_signal_handler)

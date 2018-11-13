@@ -1,7 +1,6 @@
 OPTIONS_JSON_TEMPLATE = """
 {
   "seconds_per_move": 5,
-  "results_file_format": "xlsx",
   "options": {
     "backend": ["check"],
     "cpuct": [
