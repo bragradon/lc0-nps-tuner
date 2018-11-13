@@ -13,8 +13,6 @@ Halo = "^0.0.18"
 pyinstaller = "^3.4"
 openpyxl = "^2.5"
 click = "^7.0"
-quick = {git = "https://github.com/szsdk/quick"}
-pyqt5 = "^5.11"
 
 [tool.poetry.dev-dependencies]
 isort = "^4.3"
