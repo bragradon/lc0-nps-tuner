@@ -92,7 +92,7 @@ class XLSXResultsRecorder(ResultsRecorder):
         worksheet["G9"] = '=INDIRECT("A" & MATCH(MAX(D:D), D:D, 0))'
 
     def save_workbook(self):
-        self.wb.save(filename=self.environment.results_path.name)
+        self.wb.save(filename=str(self.environment.results_path.absolute()))
 
     def record_result(self, results: Match, config_file: Path):
         depth, seldepth, nps = self.extract_results(results)
