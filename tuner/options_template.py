@@ -1,5 +1,4 @@
-OPTIONS_JSON_TEMPLATE = """
-{
+OPTIONS_JSON_TEMPLATE = """{
   "seconds_per_move": 5,
   "options": {
     "backend": ["check"],
@@ -12,7 +11,7 @@ OPTIONS_JSON_TEMPLATE = """
       128
     ],
     "nncache": [
-      1000000
+      1000000,
       2000000
     ],
     "threads": [

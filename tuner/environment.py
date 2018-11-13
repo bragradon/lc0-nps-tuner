@@ -13,7 +13,7 @@ from tuner.options_template import OPTIONS_JSON_TEMPLATE
 class Environment:
     def __init__(self, results_file_format):
         if not self.options_path.exists():
-            with open(self.options_path.absolute()) as f:
+            with open(str(self.options_path.absolute()), "w") as f:
                 f.write(OPTIONS_JSON_TEMPLATE)
                 print("Options file missing - creating a new one. Please review")
                 sys.exit(1)
