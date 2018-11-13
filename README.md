@@ -19,7 +19,19 @@ The program is a written in Python 3.7 since this was meant to be a quick "gift"
 to help him. It is designed to be packaged with Pyinstaller, since
 it is easier to give my father an executable than explain how to install python 🤷‍
 
-## How to run
+## How to use this program
+On first execution, the program will generate an `options.json` file to contain all the options to test over.
+This contains:
+* The time control specified as seconds per move
+* The lc0 cli options to iterate through
+
+Once the `options.json` exists and the user is happy with the parameters, on subsequent executions the program will run
+lc0 with the various combination of parameters storing the result in a results file. By default, this is an excel file
+called `results.xlsx`.
+
+The user can change the results file to be a csv file by using the `--results-format=csv` parameter.  
+
+## How to run from source
 This program requires Python 3.7 or above
 It uses the [Poetry](https://poetry.eustace.io) packaging tool to manage dependencies.
 It is recommened to install Poetry as per its documentation and then from the root folder

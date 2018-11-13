@@ -18,14 +18,14 @@ from tuner.results import get_results_recorder
 
 @click.command()
 @click.option(
-    "--results",
+    "--results-format",
     type=click.Choice(["xlsx", "csv"]),
     default="xlsx",
     show_default=True,
     help="Results file format",
 )
-def main():
-    env = Environment()
+def main(results_format):
+    env = Environment(results_format)
     signal.signal(signal.SIGINT, ctrlc_signal_handler)
     check_restarting_state(env)
 
